@@ -789,10 +789,8 @@
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 2rem;
+      flex-direction: column;
+      gap: 0;
     }
 
     .footer-links {
@@ -897,9 +895,563 @@
       .hero-stats { flex-direction: column; gap: 1rem; align-items: center; }
       footer { flex-direction: column; text-align: center; }
     }
+
+    /* Banner promocional */
+    .promo-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1001;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      color: var(--bg-dark);
+      text-align: center;
+      padding: 0.45rem 1rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+
+    nav { top: 32px; }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-search {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      background: rgba(10, 18, 35, 0.6);
+      padding: 0 0.75rem;
+      max-width: 260px;
+      flex: 1;
+    }
+
+    .nav-search input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.95rem;
+      padding: 0.55rem 0.5rem;
+      outline: none;
+    }
+
+    .nav-search input::placeholder { color: var(--text-muted); }
+
+    .nav-search svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--cyan);
+      flex-shrink: 0;
+    }
+
+    .cart-btn {
+      position: relative;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--cyan);
+      width: 42px;
+      height: 42px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .cart-btn:hover {
+      border-color: var(--cyan);
+      box-shadow: var(--glow);
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: var(--purple);
+      color: white;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 700;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-count.hidden { display: none; }
+
+    /* Categorías */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+    }
+
+    .category-card {
+      padding: 1.5rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .category-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--cyan);
+      box-shadow: var(--glow);
+    }
+
+    .category-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .category-card h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      margin-bottom: 0.35rem;
+    }
+
+    .category-count {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Productos */
+    .products-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-tab {
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .filter-tab:hover,
+    .filter-tab.active {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: var(--cyan-dim);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--glow);
+      border-color: var(--cyan);
+    }
+
+    .product-card.hidden { display: none; }
+
+    .product-image {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--cyan-dim), var(--purple-dim));
+      font-size: 3.5rem;
+      position: relative;
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      background: var(--purple);
+      color: white;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 1px;
+      padding: 0.25rem 0.5rem;
+    }
+
+    .product-info {
+      padding: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-category {
+      font-size: 0.75rem;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.35rem;
+    }
+
+    .product-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .product-sku {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .product-price {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--cyan);
+    }
+
+    .product-price .old {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-decoration: line-through;
+      margin-left: 0.35rem;
+      font-weight: 400;
+    }
+
+    .btn-add-cart {
+      padding: 0.5rem 0.85rem;
+      background: transparent;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-add-cart:hover {
+      background: var(--cyan);
+      color: var(--bg-dark);
+    }
+
+    /* Beneficios tienda */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .benefit-card {
+      padding: 2rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      text-align: center;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .benefit-card:hover {
+      border-color: var(--cyan);
+      box-shadow: var(--glow);
+    }
+
+    .benefit-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .benefit-card h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+
+    .benefit-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Carrito lateral */
+    .cart-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 8, 16, 0.7);
+      z-index: 3000;
+    }
+
+    .cart-overlay.active { display: block; }
+
+    .cart-sidebar {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 100%;
+      max-width: 400px;
+      height: 100%;
+      background: var(--bg-dark);
+      border-left: 1px solid var(--border);
+      z-index: 3001;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.35s ease;
+    }
+
+    .cart-sidebar.open { right: 0; }
+
+    .cart-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-header h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 2px;
+    }
+
+    .cart-close {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 36px;
+      height: 36px;
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .cart-close:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 1.5rem;
+    }
+
+    .cart-empty {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 3rem 1rem;
+    }
+
+    .cart-empty svg {
+      width: 48px;
+      height: 48px;
+      stroke: var(--text-muted);
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cart-item-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--cyan-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+
+    .cart-item-info { flex: 1; }
+
+    .cart-item-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .cart-item-price {
+      color: var(--cyan);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .cart-item-qty {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .cart-item-qty button {
+      width: 24px;
+      height: 24px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .cart-item-qty button:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    .cart-item-remove {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.1rem;
+      align-self: flex-start;
+    }
+
+    .cart-item-remove:hover { color: #f87171; }
+
+    .cart-footer {
+      padding: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .cart-total span:last-child {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    .cart-shipping-note {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+
+    .footer-col h4 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      color: var(--cyan);
+      margin-bottom: 1rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-col a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .footer-col a:hover { color: var(--cyan); }
+
+    .footer-col p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+
+    .footer-bottom {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 900px) {
+      .nav-search { display: none; }
+      .hero { padding-top: 6rem; }
+    }
+
+    @media (max-width: 600px) {
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .products-grid { grid-template-columns: 1fr 1fr; }
+      .products-toolbar { flex-direction: column; align-items: stretch; }
+    }
   </style>
 </head>
 <body>
+
+  <div class="promo-bar">¡Envío gratis en compras mayores a Q500.00!</div>
 
   <div class="bg-grid"></div>
   <div class="bg-glow bg-glow-1"></div>
@@ -910,297 +1462,344 @@
     <div class="logo">NEXUS</div>
     <ul class="nav-links" id="navLinks">
       <li><a href="#inicio">Inicio</a></li>
-      <li><a href="#galeria">Galería</a></li>
-      <li><a href="#especificaciones">Specs</a></li>
-      <li><a href="#precios">Precios</a></li>
+      <li><a href="#categorias">Categorías</a></li>
+      <li><a href="#productos">Productos</a></li>
+      <li><a href="#beneficios">Beneficios</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
-    <a href="#precios" class="nav-cta">COMPRAR</a>
-    <button class="menu-toggle" id="menuToggle" aria-label="Menú">☰</button>
+    <div class="nav-right">
+      <div class="nav-search">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+        </svg>
+        <input type="search" id="searchInput" placeholder="Buscar componentes..." aria-label="Buscar productos">
+      </div>
+      <button class="cart-btn" id="cartBtn" aria-label="Carrito">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+        </svg>
+        <span class="cart-count hidden" id="cartCount">0</span>
+      </button>
+      <a href="#productos" class="nav-cta">TIENDA</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menú">☰</button>
+    </div>
   </nav>
 
   <!-- HERO -->
   <section class="hero" id="inicio">
     <div class="hero-content fade-in">
-      <span class="hero-badge">NUEVA GENERACIÓN 2026</span>
-      <h1>El futuro<br><span>es ahora</span></h1>
+      <span class="hero-badge">COMPONENTES ELECTRÓNICOS</span>
+      <h1>Todo para tus<br><span>proyectos</span></h1>
       <p class="hero-text">
-        Descubre la tecnología que redefine los límites. Diseño futurista,
-        rendimiento extremo y una experiencia sin precedentes.
+        Resistencias, capacitores, sensores, módulos Arduino y más.
+        Componentes de calidad para makers, estudiantes y profesionales.
       </p>
       <div class="hero-buttons">
-        <a href="#precios" class="btn-primary">VER PRECIOS</a>
-        <a href="#galeria" class="btn-secondary">EXPLORAR</a>
+        <a href="#productos" class="btn-primary">VER CATÁLOGO</a>
+        <a href="#categorias" class="btn-secondary">CATEGORÍAS</a>
       </div>
       <div class="hero-stats">
         <div class="stat-item">
-          <h3>99.9%</h3>
-          <p>Satisfacción</p>
+          <h3>5K+</h3>
+          <p>Productos</p>
         </div>
         <div class="stat-item">
-          <h3>50K+</h3>
-          <p>Usuarios</p>
+          <h3>28</h3>
+          <p>Categorías</p>
         </div>
         <div class="stat-item">
-          <h3>24/7</h3>
-          <p>Soporte</p>
+          <h3>100%</h3>
+          <p>Garantizados</p>
         </div>
       </div>
     </div>
 
     <div class="hero-media fade-in">
-      <!-- Reemplaza el placeholder con tu video: -->
-      <!-- <video autoplay muted loop playsinline src="videos/tu-video.mp4"></video> -->
       <div class="video-container">
         <div class="video-placeholder">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
-          </svg>
-          <p>Coloca tu video aquí</p>
-          <small>videos/tu-video.mp4</small>
+          <span style="font-size:5rem;">⚡</span>
+          <p>Tu tienda de electrónica</p>
+          <small>Arduino · Sensores · Módulos · ICs</small>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- GALERÍA DE FOTOS -->
-  <section id="galeria">
-    <p class="section-label fade-in">Galería</p>
-    <h2 class="section-title fade-in">Diseño que impresiona</h2>
+  <!-- CATEGORÍAS -->
+  <section id="categorias">
+    <p class="section-label fade-in">Catálogo</p>
+    <h2 class="section-title fade-in">Categorías</h2>
     <p class="section-desc fade-in">
-      Cada detalle ha sido cuidadosamente diseñado para ofrecer una experiencia visual única.
+      Encuentra el componente que necesitas. Miles de referencias en stock.
     </p>
 
-    <div class="gallery-grid">
-      <!-- Imagen principal (grande) -->
-      <div class="gallery-item featured fade-in" onclick="openLightbox(this)">
-        <!-- <img src="imagenes/foto-principal.jpg" alt="Producto principal"> -->
-        <div class="gallery-placeholder">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" />
-          </svg>
-          <span>Foto principal</span>
-        </div>
-        <div class="gallery-overlay"><span>VISTA PRINCIPAL</span></div>
-      </div>
-
-      <!-- Fotos adicionales — reemplaza cada placeholder con: <img src="imagenes/foto1.jpg" alt="Descripción"> -->
-      <div class="gallery-item fade-in" onclick="openLightbox(this)">
-        <div class="gallery-placeholder">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" />
-          </svg>
-          <span>Foto 2</span>
-        </div>
-        <div class="gallery-overlay"><span>DETALLE FRONTAL</span></div>
-      </div>
-
-      <div class="gallery-item fade-in" onclick="openLightbox(this)">
-        <div class="gallery-placeholder">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" />
-          </svg>
-          <span>Foto 3</span>
-        </div>
-        <div class="gallery-overlay"><span>DETALLE LATERAL</span></div>
-      </div>
-
-      <div class="gallery-item fade-in" onclick="openLightbox(this)">
-        <div class="gallery-placeholder">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" />
-          </svg>
-          <span>Foto 4</span>
-        </div>
-        <div class="gallery-overlay"><span>EN USO</span></div>
-      </div>
-
-      <div class="gallery-item fade-in" onclick="openLightbox(this)">
-        <div class="gallery-placeholder">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" />
-          </svg>
-          <span>Foto 5</span>
-        </div>
-        <div class="gallery-overlay"><span>ACCESORIOS</span></div>
-      </div>
+    <div class="categories-grid">
+      <a href="#productos" class="category-card fade-in" data-category="resistencias">
+        <span class="category-icon">🔌</span>
+        <h3>Resistencias</h3>
+        <span class="category-count">1,098 productos</span>
+      </a>
+      <a href="#productos" class="category-card fade-in" data-category="capacitores">
+        <span class="category-icon">🔋</span>
+        <h3>Capacitores</h3>
+        <span class="category-count">510 productos</span>
+      </a>
+      <a href="#productos" class="category-card fade-in" data-category="arduino">
+        <span class="category-icon">🤖</span>
+        <h3>Arduino</h3>
+        <span class="category-count">16 productos</span>
+      </a>
+      <a href="#productos" class="category-card fade-in" data-category="sensores">
+        <span class="category-icon">📡</span>
+        <h3>Sensores</h3>
+        <span class="category-count">116 productos</span>
+      </a>
+      <a href="#productos" class="category-card fade-in" data-category="modulos">
+        <span class="category-icon">📦</span>
+        <h3>Módulos</h3>
+        <span class="category-count">217 productos</span>
+      </a>
+      <a href="#productos" class="category-card fade-in" data-category="transistores">
+        <span class="category-icon">⚙️</span>
+        <h3>Transistores</h3>
+        <span class="category-count">186 productos</span>
+      </a>
+      <a href="#productos" class="category-card fade-in" data-category="leds">
+        <span class="category-icon">💡</span>
+        <h3>LEDs</h3>
+        <span class="category-count">85 productos</span>
+      </a>
+      <a href="#productos" class="category-card fade-in" data-category="herramientas">
+        <span class="category-icon">🔧</span>
+        <h3>Herramientas</h3>
+        <span class="category-count">183 productos</span>
+      </a>
+      <a href="#productos" class="category-card fade-in" data-category="integrados">
+        <span class="category-icon">🧩</span>
+        <h3>Integrados</h3>
+        <span class="category-count">217 productos</span>
+      </a>
+      <a href="#productos" class="category-card fade-in" data-category="protoboard">
+        <span class="category-icon">🛠️</span>
+        <h3>Protoboard</h3>
+        <span class="category-count">15 productos</span>
+      </a>
+      <a href="#productos" class="category-card fade-in" data-category="motores">
+        <span class="category-icon">🔄</span>
+        <h3>Motores</h3>
+        <span class="category-count">71 productos</span>
+      </a>
+      <a href="#productos" class="category-card fade-in" data-category="cables">
+        <span class="category-icon">🔗</span>
+        <h3>Cables</h3>
+        <span class="category-count">420 productos</span>
+      </a>
     </div>
   </section>
 
-  <!-- VIDEO DEMO -->
-  <section id="demo">
-    <p class="section-label fade-in">Demostración</p>
-    <h2 class="section-title fade-in">Míralo en acción</h2>
-
-    <div class="demo-section">
-      <div class="demo-video fade-in">
-        <!-- Reemplaza con tu video de demostración: -->
-        <!-- <video controls poster="imagenes/poster.jpg" src="videos/demo.mp4"></video> -->
-        <div class="video-placeholder" style="min-height: 280px;">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
-          </svg>
-          <p>Video de demostración</p>
-          <small>videos/demo.mp4</small>
-        </div>
-      </div>
-
-      <div class="demo-content fade-in">
-        <h3>Experiencia inmersiva</h3>
-        <p>
-          Nuestro producto combina innovación y elegancia en cada interacción.
-          Diseñado para quienes exigen lo mejor.
-        </p>
-        <ul class="demo-list">
-          <li>Interfaz intuitiva y moderna</li>
-          <li>Rendimiento optimizado al máximo</li>
-          <li>Compatible con todos los dispositivos</li>
-          <li>Actualizaciones gratuitas de por vida</li>
-          <li>Garantía extendida incluida</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ESPECIFICACIONES -->
-  <section id="especificaciones">
-    <p class="section-label fade-in">Especificaciones</p>
-    <h2 class="section-title fade-in">Potencia sin límites</h2>
+  <!-- PRODUCTOS DESTACADOS -->
+  <section id="productos">
+    <p class="section-label fade-in">Tienda</p>
+    <h2 class="section-title fade-in">Productos destacados</h2>
     <p class="section-desc fade-in">
-      Tecnología de vanguardia en cada componente. Edita estos valores con las specs reales de tu producto.
+      Los componentes más solicitados por nuestros clientes. Precios en quetzales (Q).
     </p>
 
-    <div class="specs-grid">
-      <div class="spec-card fade-in">
-        <div class="spec-icon">⚡</div>
-        <h3>Procesador</h3>
-        <p>Chip de última generación con arquitectura avanzada</p>
-        <div class="spec-value">Octa-Core 3.6 GHz</div>
-      </div>
-
-      <div class="spec-card fade-in">
-        <div class="spec-icon">💾</div>
-        <h3>Memoria</h3>
-        <p>RAM ultrarrápida para multitarea sin límites</p>
-        <div class="spec-value">16 GB DDR5</div>
-      </div>
-
-      <div class="spec-card fade-in">
-        <div class="spec-icon">📦</div>
-        <h3>Almacenamiento</h3>
-        <p>SSD de alta velocidad con tecnología NVMe</p>
-        <div class="spec-value">512 GB SSD</div>
-      </div>
-
-      <div class="spec-card fade-in">
-        <div class="spec-icon">🖥️</div>
-        <h3>Pantalla</h3>
-        <p>Panel OLED con colores vibrantes y negros puros</p>
-        <div class="spec-value">6.7" OLED 120Hz</div>
-      </div>
-
-      <div class="spec-card fade-in">
-        <div class="spec-icon">🔋</div>
-        <h3>Batería</h3>
-        <p>Carga rápida y autonomía extendida</p>
-        <div class="spec-value">5000 mAh</div>
-      </div>
-
-      <div class="spec-card fade-in">
-        <div class="spec-icon">📡</div>
-        <h3>Conectividad</h3>
-        <p>Conexión ultrarrápida de nueva generación</p>
-        <div class="spec-value">WiFi 7 + 5G</div>
+    <div class="products-toolbar fade-in">
+      <div class="filter-tabs" id="filterTabs">
+        <button class="filter-tab active" data-filter="all">Todos</button>
+        <button class="filter-tab" data-filter="arduino">Arduino</button>
+        <button class="filter-tab" data-filter="sensores">Sensores</button>
+        <button class="filter-tab" data-filter="modulos">Módulos</button>
+        <button class="filter-tab" data-filter="resistencias">Resistencias</button>
+        <button class="filter-tab" data-filter="capacitores">Capacitores</button>
       </div>
     </div>
 
-    <div class="specs-table fade-in">
-      <table>
-        <tr>
-          <td>Dimensiones</td>
-          <td>160 × 75 × 8.2 mm</td>
-        </tr>
-        <tr>
-          <td>Peso</td>
-          <td>185 g</td>
-        </tr>
-        <tr>
-          <td>Material</td>
-          <td>Titanio + Cristal Gorilla</td>
-        </tr>
-        <tr>
-          <td>Sistema operativo</td>
-          <td>Nexus OS 2.0</td>
-        </tr>
-        <tr>
-          <td>Cámara principal</td>
-          <td>108 MP + OIS</td>
-        </tr>
-        <tr>
-          <td>Cámara frontal</td>
-          <td>32 MP</td>
-        </tr>
-        <tr>
-          <td>Resistencia</td>
-          <td>IP68</td>
-        </tr>
-        <tr>
-          <td>Garantía</td>
-          <td>2 años</td>
-        </tr>
-      </table>
+    <div class="products-grid" id="productsGrid">
+      <div class="product-card fade-in" data-category="arduino" data-name="Arduino Uno R3" data-id="1" data-price="85" data-icon="🤖">
+        <div class="product-image">🤖</div>
+        <div class="product-info">
+          <span class="product-category">Arduino</span>
+          <h3 class="product-name">Arduino Uno R3</h3>
+          <span class="product-sku">SKU: ARD-UNO-R3</span>
+          <div class="product-footer">
+            <span class="product-price">Q85.00</span>
+            <button class="btn-add-cart" onclick="addToCart(this)">AGREGAR</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card fade-in" data-category="sensores" data-name="Sensor DHT22 Temperatura/Humedad" data-id="2" data-price="45" data-icon="📡">
+        <div class="product-image"><span class="product-badge">POPULAR</span>📡</div>
+        <div class="product-info">
+          <span class="product-category">Sensores</span>
+          <h3 class="product-name">Sensor DHT22 Temperatura/Humedad</h3>
+          <span class="product-sku">SKU: SEN-DHT22</span>
+          <div class="product-footer">
+            <span class="product-price">Q45.00</span>
+            <button class="btn-add-cart" onclick="addToCart(this)">AGREGAR</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card fade-in" data-category="modulos" data-name="Módulo Relé 5V 1 Canal" data-id="3" data-price="18" data-icon="📦">
+        <div class="product-image">📦</div>
+        <div class="product-info">
+          <span class="product-category">Módulos</span>
+          <h3 class="product-name">Módulo Relé 5V 1 Canal</h3>
+          <span class="product-sku">SKU: MOD-REL-1CH</span>
+          <div class="product-footer">
+            <span class="product-price">Q18.00</span>
+            <button class="btn-add-cart" onclick="addToCart(this)">AGREGAR</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card fade-in" data-category="resistencias" data-name="Resistencia 1/4W 220Ω (Pack 100)" data-id="4" data-price="12" data-icon="🔌">
+        <div class="product-image">🔌</div>
+        <div class="product-info">
+          <span class="product-category">Resistencias</span>
+          <h3 class="product-name">Resistencia 1/4W 220Ω (Pack 100)</h3>
+          <span class="product-sku">SKU: RES-220-100</span>
+          <div class="product-footer">
+            <span class="product-price">Q12.00</span>
+            <button class="btn-add-cart" onclick="addToCart(this)">AGREGAR</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card fade-in" data-category="capacitores" data-name="Capacitor Electrolítico 100µF 25V" data-id="5" data-price="2.50" data-icon="🔋">
+        <div class="product-image">🔋</div>
+        <div class="product-info">
+          <span class="product-category">Capacitores</span>
+          <h3 class="product-name">Capacitor Electrolítico 100µF 25V</h3>
+          <span class="product-sku">SKU: CAP-100-25V</span>
+          <div class="product-footer">
+            <span class="product-price">Q2.50</span>
+            <button class="btn-add-cart" onclick="addToCart(this)">AGREGAR</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card fade-in" data-category="modulos" data-name="Módulo ESP8266 WiFi NodeMCU" data-id="6" data-price="65" data-icon="📶">
+        <div class="product-image"><span class="product-badge">NUEVO</span>📶</div>
+        <div class="product-info">
+          <span class="product-category">Módulos</span>
+          <h3 class="product-name">Módulo ESP8266 WiFi NodeMCU</h3>
+          <span class="product-sku">SKU: MOD-ESP8266</span>
+          <div class="product-footer">
+            <span class="product-price">Q65.00</span>
+            <button class="btn-add-cart" onclick="addToCart(this)">AGREGAR</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card fade-in" data-category="sensores" data-name="Sensor Ultrasónico HC-SR04" data-id="7" data-price="22" data-icon="📏">
+        <div class="product-image">📏</div>
+        <div class="product-info">
+          <span class="product-category">Sensores</span>
+          <h3 class="product-name">Sensor Ultrasónico HC-SR04</h3>
+          <span class="product-sku">SKU: SEN-HCSR04</span>
+          <div class="product-footer">
+            <span class="product-price">Q22.00</span>
+            <button class="btn-add-cart" onclick="addToCart(this)">AGREGAR</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card fade-in" data-category="arduino" data-name="Arduino Nano V3 ATmega328" data-id="8" data-price="55" data-icon="🤖">
+        <div class="product-image">🤖</div>
+        <div class="product-info">
+          <span class="product-category">Arduino</span>
+          <h3 class="product-name">Arduino Nano V3 ATmega328</h3>
+          <span class="product-sku">SKU: ARD-NANO-V3</span>
+          <div class="product-footer">
+            <span class="product-price">Q55.00</span>
+            <button class="btn-add-cart" onclick="addToCart(this)">AGREGAR</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card fade-in" data-category="modulos" data-name="Módulo Regulador LM2596 DC-DC" data-id="9" data-price="15" data-icon="⚡">
+        <div class="product-image">⚡</div>
+        <div class="product-info">
+          <span class="product-category">Módulos</span>
+          <h3 class="product-name">Módulo Regulador LM2596 DC-DC</h3>
+          <span class="product-sku">SKU: MOD-LM2596</span>
+          <div class="product-footer">
+            <span class="product-price">Q15.00</span>
+            <button class="btn-add-cart" onclick="addToCart(this)">AGREGAR</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card fade-in" data-category="resistencias" data-name="Resistencia 1/4W 1KΩ (Pack 100)" data-id="10" data-price="12" data-icon="🔌">
+        <div class="product-image">🔌</div>
+        <div class="product-info">
+          <span class="product-category">Resistencias</span>
+          <h3 class="product-name">Resistencia 1/4W 1KΩ (Pack 100)</h3>
+          <span class="product-sku">SKU: RES-1K-100</span>
+          <div class="product-footer">
+            <span class="product-price">Q12.00</span>
+            <button class="btn-add-cart" onclick="addToCart(this)">AGREGAR</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card fade-in" data-category="sensores" data-name="Sensor de Luz LDR GL5528" data-id="11" data-price="3" data-icon="☀️">
+        <div class="product-image">☀️</div>
+        <div class="product-info">
+          <span class="product-category">Sensores</span>
+          <h3 class="product-name">Sensor de Luz LDR GL5528</h3>
+          <span class="product-sku">SKU: SEN-LDR-5528</span>
+          <div class="product-footer">
+            <span class="product-price">Q3.00</span>
+            <button class="btn-add-cart" onclick="addToCart(this)">AGREGAR</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card fade-in" data-category="capacitores" data-name="Capacitor Cerámico 104 (Pack 50)" data-id="12" data-price="8" data-icon="🔋">
+        <div class="product-image">🔋</div>
+        <div class="product-info">
+          <span class="product-category">Capacitores</span>
+          <h3 class="product-name">Capacitor Cerámico 104 (Pack 50)</h3>
+          <span class="product-sku">SKU: CAP-CER-104</span>
+          <div class="product-footer">
+            <span class="product-price">Q8.00</span>
+            <button class="btn-add-cart" onclick="addToCart(this)">AGREGAR</button>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- PRECIOS -->
-  <section id="precios">
-    <p class="section-label fade-in">Precios</p>
-    <h2 class="section-title fade-in">Elige tu plan</h2>
-    <p class="section-desc fade-in">
-      Opciones flexibles para cada necesidad. Todos incluyen envío gratis y garantía.
-    </p>
+  <!-- BENEFICIOS -->
+  <section id="beneficios">
+    <p class="section-label fade-in">Confianza</p>
+    <h2 class="section-title fade-in">¿Por qué comprar con nosotros?</h2>
 
-    <div class="pricing-grid">
-      <div class="price-card fade-in">
-        <p class="price-tier">BÁSICO</p>
-        <div class="price-amount">$499<span> USD</span></div>
-        <p class="price-desc">Ideal para empezar</p>
-        <ul class="price-features">
-          <li class="included">Modelo estándar</li>
-          <li class="included">128 GB almacenamiento</li>
-          <li class="included">Garantía 1 año</li>
-          <li>Soporte por email</li>
-          <li>Accesorios básicos</li>
-        </ul>
-        <a href="#contacto" class="btn-secondary" style="width:100%; text-align:center;">SELECCIONAR</a>
+    <div class="benefits-grid">
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">🚚</div>
+        <h3>Envíos a todo el país</h3>
+        <p>Entregamos en toda Guatemala. Envío gratis en compras mayores a Q500.</p>
       </div>
-
-      <div class="price-card featured fade-in">
-        <p class="price-tier">PRO</p>
-        <div class="price-amount">$799<span> USD</span></div>
-        <p class="price-desc">La opción más popular</p>
-        <ul class="price-features">
-          <li class="included">Modelo Pro completo</li>
-          <li class="included">512 GB almacenamiento</li>
-          <li class="included">Garantía 2 años</li>
-          <li class="included">Soporte prioritario 24/7</li>
-          <li class="included">Kit de accesorios premium</li>
-        </ul>
-        <a href="#contacto" class="btn-primary" style="width:100%; text-align:center;">COMPRAR AHORA</a>
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">✅</div>
+        <h3>Productos garantizados</h3>
+        <p>Componentes originales y de calidad verificada para tus proyectos.</p>
       </div>
-
-      <div class="price-card fade-in">
-        <p class="price-tier">ULTRA</p>
-        <div class="price-amount">$1,199<span> USD</span></div>
-        <p class="price-desc">Máximo rendimiento</p>
-        <ul class="price-features">
-          <li class="included">Modelo Ultra limitado</li>
-          <li class="included">1 TB almacenamiento</li>
-          <li class="included">Garantía de por vida</li>
-          <li class="included">Soporte VIP personal</li>
-          <li class="included">Edición coleccionista</li>
-        </ul>
-        <a href="#contacto" class="btn-secondary" style="width:100%; text-align:center;">SELECCIONAR</a>
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">🔒</div>
+        <h3>Pago seguro</h3>
+        <p>Múltiples formas de pago con total seguridad en cada transacción.</p>
+      </div>
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">💬</div>
+        <h3>Asesoría técnica</h3>
+        <p>Te ayudamos a elegir el componente correcto para tu proyecto.</p>
       </div>
     </div>
   </section>
@@ -1214,14 +1813,14 @@
       <div class="testimonial-card fade-in">
         <div class="stars">★★★★★</div>
         <p class="testimonial-text">
-          "Increíble producto. Superó todas mis expectativas. El diseño es espectacular
-          y el rendimiento es impecable."
+          "Excelente surtido de componentes. Encontré todo lo que necesitaba para mi
+          proyecto de automatización con Arduino. Envío rápido y buen precio."
         </p>
         <div class="testimonial-author">
           <div class="author-avatar">MR</div>
           <div class="author-info">
             <h4>María Rodríguez</h4>
-            <p>Cliente verificada</p>
+            <p>Estudiante de ingeniería</p>
           </div>
         </div>
       </div>
@@ -1229,14 +1828,14 @@
       <div class="testimonial-card fade-in">
         <div class="stars">★★★★★</div>
         <p class="testimonial-text">
-          "La mejor inversión que he hecho este año. La calidad se nota en cada detalle
-          y el soporte es excelente."
+          "Llevo años comprando aquí resistencias, capacitores y sensores.
+          Siempre productos de calidad y la asesoría técnica es muy útil."
         </p>
         <div class="testimonial-author">
           <div class="author-avatar">CL</div>
           <div class="author-info">
             <h4>Carlos López</h4>
-            <p>Cliente verificado</p>
+            <p>Técnico electrónico</p>
           </div>
         </div>
       </div>
@@ -1244,14 +1843,14 @@
       <div class="testimonial-card fade-in">
         <div class="stars">★★★★★</div>
         <p class="testimonial-text">
-          "Futurista por fuera, potente por dentro. Lo recomiendo al 100%.
-          El envío fue rapidísimo."
+          "Perfecto para proyectos escolares. Los packs de resistencias y
+          el protoboard llegaron en perfecto estado. Muy recomendado."
         </p>
         <div class="testimonial-author">
           <div class="author-avatar">AG</div>
           <div class="author-info">
             <h4>Ana García</h4>
-            <p>Cliente verificada</p>
+            <p>Profesora de robótica</p>
           </div>
         </div>
       </div>
@@ -1260,28 +1859,74 @@
 
   <!-- CTA FINAL -->
   <div class="cta-section fade-in" id="contacto">
-    <h2>¿Listo para el futuro?</h2>
-    <p>Únete a miles de usuarios que ya disfrutan de la experiencia NEXUS.</p>
-    <a href="mailto:ventas@tudominio.com" class="btn-primary">CONTACTAR VENTAS</a>
+    <h2>¿Necesitas ayuda con tu proyecto?</h2>
+    <p>Contáctanos por WhatsApp o correo. Te asesoramos en la selección de componentes.</p>
+    <div class="hero-buttons" style="justify-content:center;">
+      <a href="https://wa.me/50200000000" class="btn-primary" target="_blank" rel="noopener">WHATSAPP</a>
+      <a href="mailto:ventas@nexus.com" class="btn-secondary">CORREO</a>
+    </div>
   </div>
 
   <!-- FOOTER -->
   <footer>
-    <div class="logo">NEXUS</div>
-    <ul class="footer-links">
-      <li><a href="#">Términos</a></li>
-      <li><a href="#">Privacidad</a></li>
-      <li><a href="#">Soporte</a></li>
-      <li><a href="#">FAQ</a></li>
-    </ul>
-    <p class="footer-copy">© 2026 NEXUS. Todos los derechos reservados.</p>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="logo" style="margin-bottom:1rem;">NEXUS</div>
+        <p>Tu tienda de componentes electrónicos. Todo para makers, estudiantes y profesionales.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Enlaces útiles</h4>
+        <ul>
+          <li><a href="#categorias">Categorías</a></li>
+          <li><a href="#productos">Productos</a></li>
+          <li><a href="#">Mi cuenta</a></li>
+          <li><a href="#">Política de privacidad</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contáctanos</h4>
+        <p>
+          ventas@nexus.com<br>
+          +502 0000-0000<br>
+          Ciudad de Guatemala
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 NEXUS Componentes Electrónicos. Todos los derechos reservados.</p>
+      <ul class="footer-links">
+        <li><a href="#">Términos</a></li>
+        <li><a href="#">Privacidad</a></li>
+        <li><a href="#">Soporte</a></li>
+      </ul>
+    </div>
   </footer>
 
-  <!-- Lightbox para galería -->
-  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-    <button class="lightbox-close" onclick="closeLightbox()">×</button>
-    <img id="lightboxImg" src="" alt="Vista ampliada">
-  </div>
+  <!-- Carrito lateral -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <aside class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>TU COMPRA</h3>
+      <button class="cart-close" id="cartClose" aria-label="Cerrar carrito">×</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty" id="cartEmpty">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+        </svg>
+        <p>Tu carrito está vacío</p>
+        <a href="#productos" class="btn-secondary" style="margin-top:1rem;display:inline-block;" onclick="closeCart()">Ver productos</a>
+      </div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <p class="cart-shipping-note" id="shippingNote"></p>
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotal">Q0.00</span>
+      </div>
+      <a href="#contacto" class="btn-primary" style="width:100%;text-align:center;display:block;" onclick="closeCart()">FINALIZAR COMPRA</a>
+    </div>
+  </aside>
 
   <script>
     // Menú móvil
@@ -1300,29 +1945,166 @@
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    // Lightbox galería
-    function openLightbox(item) {
-      const img = item.querySelector('img');
-      if (!img) return;
-      document.getElementById('lightboxImg').src = img.src;
-      document.getElementById('lightbox').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-      document.getElementById('lightbox').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeLightbox();
-    });
-
     // Cerrar menú al hacer clic en un enlace
     document.querySelectorAll('.nav-links a').forEach(link => {
       link.addEventListener('click', () => {
         document.getElementById('navLinks').classList.remove('open');
       });
+    });
+
+    // Carrito
+    let cart = [];
+
+    function addToCart(btn) {
+      const card = btn.closest('.product-card');
+      const id = card.dataset.id;
+      const existing = cart.find(item => item.id === id);
+
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({
+          id,
+          name: card.dataset.name,
+          price: parseFloat(card.dataset.price),
+          icon: card.dataset.icon,
+          qty: 1
+        });
+      }
+
+      updateCart();
+      openCart();
+    }
+
+    function updateCart() {
+      const countEl = document.getElementById('cartCount');
+      const itemsEl = document.getElementById('cartItems');
+      const footerEl = document.getElementById('cartFooter');
+      const totalEl = document.getElementById('cartTotal');
+      const shippingEl = document.getElementById('shippingNote');
+
+      const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+      const totalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+      countEl.textContent = totalItems;
+      countEl.classList.toggle('hidden', totalItems === 0);
+
+      if (cart.length === 0) {
+        itemsEl.innerHTML = `
+          <div class="cart-empty">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+            </svg>
+            <p>Tu carrito está vacío</p>
+            <a href="#productos" class="btn-secondary" style="margin-top:1rem;display:inline-block;" onclick="closeCart()">Ver productos</a>
+          </div>
+        `;
+        footerEl.style.display = 'none';
+        return;
+      }
+      footerEl.style.display = 'block';
+
+      itemsEl.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <div class="cart-item-icon">${item.icon}</div>
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">Q${(item.price * item.qty).toFixed(2)}</div>
+            <div class="cart-item-qty">
+              <button onclick="changeQty('${item.id}', -1)">−</button>
+              <span>${item.qty}</span>
+              <button onclick="changeQty('${item.id}', 1)">+</button>
+            </div>
+          </div>
+          <button class="cart-item-remove" onclick="removeFromCart('${item.id}')" aria-label="Eliminar">×</button>
+        </div>
+      `).join('');
+
+      totalEl.textContent = `Q${totalPrice.toFixed(2)}`;
+      shippingEl.textContent = totalPrice >= 500
+        ? '✓ ¡Calificas para envío gratis!'
+        : `Faltan Q${(500 - totalPrice).toFixed(2)} para envío gratis`;
+    }
+
+    function changeQty(id, delta) {
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+      updateCart();
+    }
+
+    function removeFromCart(id) {
+      cart = cart.filter(i => i.id !== id);
+      updateCart();
+    }
+
+    function openCart() {
+      document.getElementById('cartSidebar').classList.add('open');
+      document.getElementById('cartOverlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCart() {
+      document.getElementById('cartSidebar').classList.remove('open');
+      document.getElementById('cartOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('cartBtn').addEventListener('click', openCart);
+    document.getElementById('cartClose').addEventListener('click', closeCart);
+    document.getElementById('cartOverlay').addEventListener('click', closeCart);
+
+    // Filtros de categoría
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        filterProducts(tab.dataset.filter);
+      });
+    });
+
+    document.querySelectorAll('.category-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        const cat = card.dataset.category;
+        if (cat) {
+          e.preventDefault();
+          document.querySelectorAll('.filter-tab').forEach(t => {
+            t.classList.toggle('active', t.dataset.filter === cat);
+          });
+          filterProducts(cat);
+          document.getElementById('productos').scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    function filterProducts(category) {
+      document.querySelectorAll('.product-card').forEach(card => {
+        const match = category === 'all' || card.dataset.category === category;
+        card.classList.toggle('hidden', !match);
+      });
+    }
+
+    // Búsqueda
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      document.querySelector('.filter-tab[data-filter="all"]').classList.add('active');
+
+      document.querySelectorAll('.product-card').forEach(card => {
+        const name = card.dataset.name.toLowerCase();
+        const cat = card.dataset.category.toLowerCase();
+        const match = !query || name.includes(query) || cat.includes(query);
+        card.classList.toggle('hidden', !match);
+      });
+
+      if (query) {
+        document.getElementById('productos').scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeCart();
     });
   </script>
 </body>
