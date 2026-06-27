@@ -1096,6 +1096,29 @@
       background: linear-gradient(135deg, var(--cyan-dim), var(--purple-dim));
       font-size: 3.5rem;
       position: relative;
+      overflow: hidden;
+    }
+
+    .product-image img,
+    .video-placeholder img,
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .logo-img {
+      height: 42px;
+      width: auto;
+      display: block;
+    }
+
+    .logo-with-img {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
     }
 
     .product-badge {
@@ -1459,7 +1482,10 @@
 
   <!-- NAVEGACIÓN -->
   <nav>
-    <div class="logo">INOVAX  |  DMMF</div>
+    <a href="#inicio" class="logo-with-img">
+      <img src="fotos/Inovax%20logo.jpg" alt="INOVAX | DMMF" class="logo-img">
+      <span class="logo">INOVAX | DMMF</span>
+    </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#inicio">Inicio</a></li>
       <li><a href="#categorias">Categorías</a></li>
@@ -1489,7 +1515,7 @@
   <section class="hero" id="inicio">
     <div class="hero-content fade-in">
       <span class="hero-badge">COMPONENTES ELECTRÓNICOS</span>
-      <h1>Materiales de calidad</span> y todo lo que necesitas</h1>
+      <h1>Materiales de calidad y todo lo que <span>necesitas</span></h1>
       <p class="hero-text">
         Jaladores, chapas, cinta decorativa, Lentes IA y más.
         Componentes de calidad para profesionales.
@@ -1516,10 +1542,7 @@
 
     <div class="hero-media fade-in">
       <div class="video-container">
-        <div class="video-placeholder">
-          <img src="C:\Users\Mitzi\Desktop\ventas\ventas\fotos\innovax x DMMF.png" alt="Tienda de electrónica" style="width:100%; max-width:300px; height:auto;">
-          <small>Jaladores · cinta decorativa · chapas · Lentes IA</small>
-        </div>
+        <img src="fotos/innovax%20x%20DMMF.png" alt="INOVAX | DMMF - Materiales y más">
       </div>
     </div>
     </section>
@@ -1875,7 +1898,10 @@
   <footer>
     <div class="footer-grid">
       <div class="footer-col">
-        <div class="logo" style="margin-bottom:1rem;">inovax  | DMMF</div>
+        <div class="logo-with-img" style="margin-bottom:1rem;">
+          <img src="fotos/Inovax%20logo.jpg" alt="INOVAX | DMMF" class="logo-img">
+          <span class="logo">INOVAX | DMMF</span>
+        </div>
         <p>Tu tienda de confianza. Todo para su hogar</p>
       </div>
       <div class="footer-col">
