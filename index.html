@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS — Componentes Electrónicos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #050810;
+      --bg-card: rgba(10, 18, 35, 0.75);
+      --cyan: #00f0ff;
+      --cyan-dim: rgba(0, 240, 255, 0.15);
+      --purple: #a855f7;
+      --purple-dim: rgba(168, 85, 247, 0.2);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border: rgba(0, 240, 255, 0.25);
+      --glow: 0 0 30px rgba(0, 240, 255, 0.35);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Fondo animado */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-glow {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-glow-1 { top: -200px; left: -100px; background: var(--cyan); animation: float 8s ease-in-out infinite; }
+    .bg-glow-2 { bottom: -200px; right: -100px; background: var(--purple); animation: float 10s ease-in-out infinite reverse; }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(30px, 30px); }
+    }
+
+    /* Navegación */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(5, 8, 16, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: 4px;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.3s, text-shadow 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--cyan);
+      text-shadow: 0 0 10px var(--cyan);
+    }
+
+    .nav-cta {
+      padding: 0.6rem 1.5rem;
+      background: transparent;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+
+    .nav-cta:hover {
+      background: var(--cyan);
+      color: var(--bg-dark);
+      box-shadow: var(--glow);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--cyan);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Secciones */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      max-width: 600px;
+      margin-bottom: 3rem;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 3rem;
+    }
+
+    .hero-content { flex: 1; }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      border: 1px solid var(--purple);
+      color: var(--purple);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      margin-bottom: 1.5rem;
+      animation: pulse-border 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-border {
+      0%, 100% { box-shadow: 0 0 5px var(--purple-dim); }
+      50% { box-shadow: 0 0 20px var(--purple-dim); }
+    }
+
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-text {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      max-width: 500px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      padding: 1rem 2.5rem;
+      background: linear-gradient(135deg, var(--cyan), #0088aa);
+      border: none;
+      color: var(--bg-dark);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--glow);
+    }
+
+    .btn-secondary {
+      padding: 1rem 2.5rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    .hero-media {
+      flex: 1;
+      position: relative;
+    }
+
+    .video-container {
+      position: relative;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%);
+    }
+
+    .video-container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--cyan);
+      opacity: 0.3;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .video-container video,
+    .video-container iframe {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.05), rgba(168, 85, 247, 0.05));
+      color: var(--text-muted);
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .video-placeholder svg {
+      width: 64px;
+      height: 64px;
+      stroke: var(--cyan);
+      opacity: 0.6;
+    }
+
+    .video-placeholder p {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-item h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      color: var(--cyan);
+    }
+
+    .stat-item p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Galería */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      cursor: pointer;
+      transition: transform 0.4s, box-shadow 0.4s;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.02);
+      box-shadow: var(--glow);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .gallery-item:hover img { transform: scale(1.08); }
+
+    .gallery-item.featured {
+      grid-column: span 2;
+      grid-row: span 2;
+      aspect-ratio: auto;
+    }
+
+    .gallery-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      background: linear-gradient(135deg, var(--cyan-dim), var(--purple-dim));
+      color: var(--text-muted);
+      min-height: 200px;
+    }
+
+    .gallery-placeholder svg {
+      width: 40px;
+      height: 40px;
+      stroke: var(--cyan);
+      opacity: 0.5;
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1rem;
+      background: linear-gradient(transparent, rgba(5, 8, 16, 0.95));
+      transform: translateY(100%);
+      transition: transform 0.3s;
+    }
+
+    .gallery-item:hover .gallery-overlay { transform: translateY(0); }
+
+    .gallery-overlay span {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      color: var(--cyan);
+    }
+
+    /* Especificaciones */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .spec-card {
+      padding: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      transition: border-color 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .spec-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--cyan), var(--purple));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .spec-card:hover {
+      border-color: var(--cyan);
+      box-shadow: var(--glow);
+    }
+
+    .spec-card:hover::before { opacity: 1; }
+
+    .spec-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      color: var(--cyan);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+    }
+
+    .spec-card h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+    }
+
+    .spec-card p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .spec-value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      color: var(--cyan);
+      margin-top: 0.5rem;
+    }
+
+    /* Tabla de specs detallada */
+    .specs-table {
+      margin-top: 3rem;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .specs-table table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .specs-table tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+
+    .specs-table tr:hover { background: var(--cyan-dim); }
+
+    .specs-table td {
+      padding: 1rem 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    .specs-table td:first-child {
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.85rem;
+      width: 40%;
+    }
+
+    .specs-table td:last-child {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--text);
+    }
+
+    /* Precios */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .price-card {
+      padding: 2.5rem 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      text-align: center;
+      position: relative;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .price-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--glow);
+    }
+
+    .price-card.featured {
+      border-color: var(--cyan);
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.08), rgba(168, 85, 247, 0.08));
+    }
+
+    .price-card.featured::before {
+      content: 'MÁS POPULAR';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      color: var(--bg-dark);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      padding: 0.3rem 1rem;
+    }
+
+    .price-tier {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .price-amount {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--cyan);
+      line-height: 1;
+    }
+
+    .price-amount span {
+      font-size: 1rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .price-desc {
+      color: var(--text-muted);
+      margin: 1rem 0 2rem;
+      font-size: 1rem;
+    }
+
+    .price-features {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 2rem;
+    }
+
+    .price-features li {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .price-features li::before {
+      content: '▸';
+      color: var(--cyan);
+      font-size: 0.8rem;
+    }
+
+    .price-features li.included { color: var(--text); }
+
+    /* Video demo section */
+    .demo-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .demo-video {
+      border: 1px solid var(--border);
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .demo-content h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .demo-content p {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .demo-list {
+      list-style: none;
+    }
+
+    .demo-list li {
+      padding: 0.75rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    .demo-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      background: var(--cyan);
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    }
+
+    /* Testimonios */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .testimonial-card {
+      padding: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    .testimonial-card::before {
+      content: '"';
+      font-family: 'Orbitron', sans-serif;
+      font-size: 4rem;
+      color: var(--cyan);
+      opacity: 0.2;
+      position: absolute;
+      top: 0.5rem;
+      left: 1rem;
+      line-height: 1;
+    }
+
+    .testimonial-text {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid var(--cyan);
+      background: var(--cyan-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      color: var(--cyan);
+      overflow: hidden;
+    }
+
+    .author-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .author-info h4 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .author-info p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .stars {
+      color: var(--cyan);
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+    }
+
+    /* CTA final */
+    .cta-section {
+      text-align: center;
+      padding: 5rem 2rem;
+      margin: 4rem 0 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, transparent, var(--cyan-dim), transparent);
+    }
+
+    .cta-section h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      margin-bottom: 2rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Footer */
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 3rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: var(--cyan); }
+
+    .footer-copy {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 8, 16, 0.95);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .lightbox.active { display: flex; }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 85vh;
+      object-fit: contain;
+      border: 1px solid var(--border);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 48px;
+      height: 48px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .lightbox-close:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    /* Animaciones scroll */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero { flex-direction: column; text-align: center; }
+      .hero-text { margin-left: auto; margin-right: auto; }
+      .hero-buttons { justify-content: center; }
+      .hero-stats { justify-content: center; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item.featured { grid-column: span 2; grid-row: span 1; }
+      .demo-section { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(5, 8, 16, 0.98);
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .menu-toggle { display: block; }
+    }
+
+    @media (max-width: 600px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item.featured { grid-column: span 1; }
+      .hero-stats { flex-direction: column; gap: 1rem; align-items: center; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <!-- NAVEGACIÓN -->
+  <nav>
+    <div class="logo">NEXUS</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#especificaciones">Specs</a></li>
+      <li><a href="#precios">Precios</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a href="#precios" class="nav-cta">COMPRAR</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menú">☰</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-content fade-in">
+      <span class="hero-badge">NUEVA GENERACIÓN 2026</span>
+      <h1>El futuro<br><span>es ahora</span></h1>
+      <p class="hero-text">
+        Descubre la tecnología que redefine los límites. Diseño futurista,
+        rendimiento extremo y una experiencia sin precedentes.
+      </p>
+      <div class="hero-buttons">
+        <a href="#precios" class="btn-primary">VER PRECIOS</a>
+        <a href="#galeria" class="btn-secondary">EXPLORAR</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <h3>99.9%</h3>
+          <p>Satisfacción</p>
+        </div>
+        <div class="stat-item">
+          <h3>50K+</h3>
+          <p>Usuarios</p>
+        </div>
+        <div class="stat-item">
+          <h3>24/7</h3>
+          <p>Soporte</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-media fade-in">
+      <!-- Reemplaza el placeholder con tu video: -->
+      <!-- <video autoplay muted loop playsinline src="videos/tu-video.mp4"></video> -->
+      <div class="video-container">
+        <div class="video-placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
+          </svg>
+          <p>Coloca tu video aquí</p>
+          <small>videos/tu-video.mp4</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA DE FOTOS -->
+  <section id="galeria">
+    <p class="section-label fade-in">Galería</p>
+    <h2 class="section-title fade-in">Diseño que impresiona</h2>
+    <p class="section-desc fade-in">
+      Cada detalle ha sido cuidadosamente diseñado para ofrecer una experiencia visual única.
+    </p>
+
+    <div class="gallery-grid">
+      <!-- Imagen principal (grande) -->
+      <div class="gallery-item featured fade-in" onclick="openLightbox(this)">
+        <!-- <img src="imagenes/foto-principal.jpg" alt="Producto principal"> -->
+        <div class="gallery-placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" />
+          </svg>
+          <span>Foto principal</span>
+        </div>
+        <div class="gallery-overlay"><span>VISTA PRINCIPAL</span></div>
+      </div>
+
+      <!-- Fotos adicionales — reemplaza cada placeholder con: <img src="imagenes/foto1.jpg" alt="Descripción"> -->
+      <div class="gallery-item fade-in" onclick="openLightbox(this)">
+        <div class="gallery-placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" />
+          </svg>
+          <span>Foto 2</span>
+        </div>
+        <div class="gallery-overlay"><span>DETALLE FRONTAL</span></div>
+      </div>
+
+      <div class="gallery-item fade-in" onclick="openLightbox(this)">
+        <div class="gallery-placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" />
+          </svg>
+          <span>Foto 3</span>
+        </div>
+        <div class="gallery-overlay"><span>DETALLE LATERAL</span></div>
+      </div>
+
+      <div class="gallery-item fade-in" onclick="openLightbox(this)">
+        <div class="gallery-placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" />
+          </svg>
+          <span>Foto 4</span>
+        </div>
+        <div class="gallery-overlay"><span>EN USO</span></div>
+      </div>
+
+      <div class="gallery-item fade-in" onclick="openLightbox(this)">
+        <div class="gallery-placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" />
+          </svg>
+          <span>Foto 5</span>
+        </div>
+        <div class="gallery-overlay"><span>ACCESORIOS</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO DEMO -->
+  <section id="demo">
+    <p class="section-label fade-in">Demostración</p>
+    <h2 class="section-title fade-in">Míralo en acción</h2>
+
+    <div class="demo-section">
+      <div class="demo-video fade-in">
+        <!-- Reemplaza con tu video de demostración: -->
+        <!-- <video controls poster="imagenes/poster.jpg" src="videos/demo.mp4"></video> -->
+        <div class="video-placeholder" style="min-height: 280px;">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+          </svg>
+          <p>Video de demostración</p>
+          <small>videos/demo.mp4</small>
+        </div>
+      </div>
+
+      <div class="demo-content fade-in">
+        <h3>Experiencia inmersiva</h3>
+        <p>
+          Nuestro producto combina innovación y elegancia en cada interacción.
+          Diseñado para quienes exigen lo mejor.
+        </p>
+        <ul class="demo-list">
+          <li>Interfaz intuitiva y moderna</li>
+          <li>Rendimiento optimizado al máximo</li>
+          <li>Compatible con todos los dispositivos</li>
+          <li>Actualizaciones gratuitas de por vida</li>
+          <li>Garantía extendida incluida</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESPECIFICACIONES -->
+  <section id="especificaciones">
+    <p class="section-label fade-in">Especificaciones</p>
+    <h2 class="section-title fade-in">Potencia sin límites</h2>
+    <p class="section-desc fade-in">
+      Tecnología de vanguardia en cada componente. Edita estos valores con las specs reales de tu producto.
+    </p>
+
+    <div class="specs-grid">
+      <div class="spec-card fade-in">
+        <div class="spec-icon">⚡</div>
+        <h3>Procesador</h3>
+        <p>Chip de última generación con arquitectura avanzada</p>
+        <div class="spec-value">Octa-Core 3.6 GHz</div>
+      </div>
+
+      <div class="spec-card fade-in">
+        <div class="spec-icon">💾</div>
+        <h3>Memoria</h3>
+        <p>RAM ultrarrápida para multitarea sin límites</p>
+        <div class="spec-value">16 GB DDR5</div>
+      </div>
+
+      <div class="spec-card fade-in">
+        <div class="spec-icon">📦</div>
+        <h3>Almacenamiento</h3>
+        <p>SSD de alta velocidad con tecnología NVMe</p>
+        <div class="spec-value">512 GB SSD</div>
+      </div>
+
+      <div class="spec-card fade-in">
+        <div class="spec-icon">🖥️</div>
+        <h3>Pantalla</h3>
+        <p>Panel OLED con colores vibrantes y negros puros</p>
+        <div class="spec-value">6.7" OLED 120Hz</div>
+      </div>
+
+      <div class="spec-card fade-in">
+        <div class="spec-icon">🔋</div>
+        <h3>Batería</h3>
+        <p>Carga rápida y autonomía extendida</p>
+        <div class="spec-value">5000 mAh</div>
+      </div>
+
+      <div class="spec-card fade-in">
+        <div class="spec-icon">📡</div>
+        <h3>Conectividad</h3>
+        <p>Conexión ultrarrápida de nueva generación</p>
+        <div class="spec-value">WiFi 7 + 5G</div>
+      </div>
+    </div>
+
+    <div class="specs-table fade-in">
+      <table>
+        <tr>
+          <td>Dimensiones</td>
+          <td>160 × 75 × 8.2 mm</td>
+        </tr>
+        <tr>
+          <td>Peso</td>
+          <td>185 g</td>
+        </tr>
+        <tr>
+          <td>Material</td>
+          <td>Titanio + Cristal Gorilla</td>
+        </tr>
+        <tr>
+          <td>Sistema operativo</td>
+          <td>Nexus OS 2.0</td>
+        </tr>
+        <tr>
+          <td>Cámara principal</td>
+          <td>108 MP + OIS</td>
+        </tr>
+        <tr>
+          <td>Cámara frontal</td>
+          <td>32 MP</td>
+        </tr>
+        <tr>
+          <td>Resistencia</td>
+          <td>IP68</td>
+        </tr>
+        <tr>
+          <td>Garantía</td>
+          <td>2 años</td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- PRECIOS -->
+  <section id="precios">
+    <p class="section-label fade-in">Precios</p>
+    <h2 class="section-title fade-in">Elige tu plan</h2>
+    <p class="section-desc fade-in">
+      Opciones flexibles para cada necesidad. Todos incluyen envío gratis y garantía.
+    </p>
+
+    <div class="pricing-grid">
+      <div class="price-card fade-in">
+        <p class="price-tier">BÁSICO</p>
+        <div class="price-amount">$499<span> USD</span></div>
+        <p class="price-desc">Ideal para empezar</p>
+        <ul class="price-features">
+          <li class="included">Modelo estándar</li>
+          <li class="included">128 GB almacenamiento</li>
+          <li class="included">Garantía 1 año</li>
+          <li>Soporte por email</li>
+          <li>Accesorios básicos</li>
+        </ul>
+        <a href="#contacto" class="btn-secondary" style="width:100%; text-align:center;">SELECCIONAR</a>
+      </div>
+
+      <div class="price-card featured fade-in">
+        <p class="price-tier">PRO</p>
+        <div class="price-amount">$799<span> USD</span></div>
+        <p class="price-desc">La opción más popular</p>
+        <ul class="price-features">
+          <li class="included">Modelo Pro completo</li>
+          <li class="included">512 GB almacenamiento</li>
+          <li class="included">Garantía 2 años</li>
+          <li class="included">Soporte prioritario 24/7</li>
+          <li class="included">Kit de accesorios premium</li>
+        </ul>
+        <a href="#contacto" class="btn-primary" style="width:100%; text-align:center;">COMPRAR AHORA</a>
+      </div>
+
+      <div class="price-card fade-in">
+        <p class="price-tier">ULTRA</p>
+        <div class="price-amount">$1,199<span> USD</span></div>
+        <p class="price-desc">Máximo rendimiento</p>
+        <ul class="price-features">
+          <li class="included">Modelo Ultra limitado</li>
+          <li class="included">1 TB almacenamiento</li>
+          <li class="included">Garantía de por vida</li>
+          <li class="included">Soporte VIP personal</li>
+          <li class="included">Edición coleccionista</li>
+        </ul>
+        <a href="#contacto" class="btn-secondary" style="width:100%; text-align:center;">SELECCIONAR</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section id="testimonios">
+    <p class="section-label fade-in">Testimonios</p>
+    <h2 class="section-title fade-in">Lo que dicen nuestros clientes</h2>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-in">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">
+          "Increíble producto. Superó todas mis expectativas. El diseño es espectacular
+          y el rendimiento es impecable."
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar">MR</div>
+          <div class="author-info">
+            <h4>María Rodríguez</h4>
+            <p>Cliente verificada</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card fade-in">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">
+          "La mejor inversión que he hecho este año. La calidad se nota en cada detalle
+          y el soporte es excelente."
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar">CL</div>
+          <div class="author-info">
+            <h4>Carlos López</h4>
+            <p>Cliente verificado</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card fade-in">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">
+          "Futurista por fuera, potente por dentro. Lo recomiendo al 100%.
+          El envío fue rapidísimo."
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar">AG</div>
+          <div class="author-info">
+            <h4>Ana García</h4>
+            <p>Cliente verificada</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <div class="cta-section fade-in" id="contacto">
+    <h2>¿Listo para el futuro?</h2>
+    <p>Únete a miles de usuarios que ya disfrutan de la experiencia NEXUS.</p>
+    <a href="mailto:ventas@tudominio.com" class="btn-primary">CONTACTAR VENTAS</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="logo">NEXUS</div>
+    <ul class="footer-links">
+      <li><a href="#">Términos</a></li>
+      <li><a href="#">Privacidad</a></li>
+      <li><a href="#">Soporte</a></li>
+      <li><a href="#">FAQ</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 NEXUS. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- Lightbox para galería -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">×</button>
+    <img id="lightboxImg" src="" alt="Vista ampliada">
+  </div>
+
+  <script>
+    // Menú móvil
+    document.getElementById('menuToggle').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    // Animaciones al hacer scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Lightbox galería
+    function openLightbox(item) {
+      const img = item.querySelector('img');
+      if (!img) return;
+      document.getElementById('lightboxImg').src = img.src;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    // Cerrar menú al hacer clic en un enlace
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('open');
+      });
+    });
+  </script>
+</body>
+</html>
